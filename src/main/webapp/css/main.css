@@ -1,34 +1,47 @@
 @charset "UTF-8";
 
-html {
-	font-family: Verdana, Geneva, Tahoma, Sans-Serif;
+table {
+  font-family: "Verdana", Geneva, Tahoma, sans-serif;
+  border-collapse: collapse;  
+  width: 50%;
 }
 
-#listaus {
-	border: 2px solid #867666; 
-	background-color: grey;
+table td, table th {
+  border: 1px solid #ddd;
+  padding: 8px;  
 }
 
-#tbody {
-	background-color: #FFFFFF;
+table tbody tr:nth-child(even){background-color: #f2f2f2;}
+
+table tbody tr:hover {background-color: #ddd;}
+
+table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: grey;
+  color: white;
 }
 
-#otsikkorivi {
-	background-color: #F6F1EE;
-	border: 2px solid #867666;
+.poista{  /*luokka merkitään pisteellä*/
+	color: red;
+	text-decoration: underline;
+	cursor: pointer;	/*muuttaa kursorin tassuksi*/
+}
+
+.oikealle{ /*luokka merkitään pisteellä*/
+	text-align: right; /*teksti viedään oikeanpuoleiseen reunaan*/
+		
 	
 }
 
-#hakunappi {
-	border: 2px solid #867666;
-	background-color: #FFFFFF;
-
-	
+#uusiAsiakas, #takaisin{ /* ID*/
+	color: white;	
+	cursor: pointer;	
 }
-
-input {
-	background-color: white;
-	
+#linkki {
+	color : white;
+	text-decoration: none;
 	
 }
 

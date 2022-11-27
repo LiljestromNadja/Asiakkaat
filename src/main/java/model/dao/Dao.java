@@ -119,4 +119,41 @@ public class Dao {
 				return asiakkaat;
 				
 	}
+	
+	public boolean addItem(Asiakas asiakas) {
+		boolean paluuArvo = true;
+		sql = "INSERT INTO asiakkaat(etunimi, sukunimi, puhelin, sposti)VALUES(?,?,?,?)";
+		try {
+			con = yhdista();
+			stmtPrep = con.prepareStatement(sql);
+			stmtPrep.setString(1, asiakas.getEtunimi()); //huom asiakas_ID:tä ei anneta 
+			stmtPrep.setString(2, asiakas.getSukunimi());
+			stmtPrep.setString(3, asiakas.getPuhelin());
+			stmtPrep.setString(4, asiakas.getSposti());
+			stmtPrep.executeUpdate();		
+		} catch (Exception e) {
+			paluuArvo=false;
+			e.printStackTrace();
+		} finally {
+			sulje();
+		}
+		return paluuArvo;
+	}
+	
+	public boolean removeItem(int asiakas_id) { // Todellisuudessa tiedot ensisijaisesti merkitään poistetuiksi, DELETEä ajetaan hyvin harvoin, viite-eheys
+		boolean paluuArvo = true;
+		sql = "DELETE FROM asiakkaat WHERE asiakas_id=?";
+		try {
+			con = yhdista();
+			stmtPrep = con.prepareStatement(sql);
+			stmtPrep.setInt(1, asiakas_id);
+			stmtPrep.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			paluuArvo = false;
+		} finally {
+			sulje();
+		}
+		return paluuArvo;
+	}
 }

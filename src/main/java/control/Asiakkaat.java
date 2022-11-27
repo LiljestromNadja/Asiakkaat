@@ -3,6 +3,7 @@ package control;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,7 +28,7 @@ public class Asiakkaat extends HttpServlet {
       //"systr" ja CTRL + välilyönti
     }
 
-	
+	//Tietojen hakeminen
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("Asiakkaat.doGet()");
 		String hakusana = request.getParameter("hakusana"); //otetaan hakusana vastaan
@@ -50,19 +51,41 @@ public class Asiakkaat extends HttpServlet {
 		
 	}
 
-	
+	//Tietojen lisääminen
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("Asiakkaat.doPost()");
+		//Luetaan JSON-tiedot POST-pyynnön bodysta ja luodaan niiden perusteella uusi auto
+		String strJSONInput = request.getReader().lines().collect(Collectors.joining());
+		//System.out.println(strJSONInput);
+		Asiakas asiakas = new Gson().fromJson(strJSONInput, Asiakas.class);	//model Asiakas
+		//System.out.println(asiakas);
+		Dao dao = new Dao();
+		response.setContentType("application/json; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+			if(dao.addItem(asiakas)) { //jos arvo on true
+				out.println("{\"response\":1}");  //Asiakkaan lisääminen onnistui {"response":1}
+			}else { //jos false
+				out.println("{\"response\":0}");  //Asiakkaan lisääminen epäonnistui {"response":0}
+			}
 	}
 
-
+	//Tietojen muuttaminen
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("Asiakkaat.doPut()");
 	}
 
-	
+	//Tietojen poistaminen
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("Asiakkaat.doDelete()");
+		int asiakas_id = Integer.parseInt(request.getParameter("asiakas_id")); //Kutsujen mukana kulkevat arvot ovat AINA merkkejä, myös numeraaliset arvot	
+		Dao dao = new Dao();
+		response.setContentType("application/json; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		if(dao.removeItem(asiakas_id)) {
+			out.println("{\"response\":1}");  //Asiakkaan poistaminen onnistui {"response":1}
+		}else {
+			out.println("{\"response\":0}");  //Asiakkaan poistaminen epäonnistui {"response":0}
+		}
 	}
 
 }
