@@ -86,7 +86,7 @@ function lisaaTiedot(){
 	let url = "asiakkaat";  //Viittaa Asiakkaat.java servletiin  
     let requestOptions = {
         method: "POST", //Lisätään asiakas
-        headers: { "Content-Type": "application/json" },  
+        headers: { "Content-Type": "application/json; charset=UTF-8" },   //HUOM Ääkköset!!!
     	body: formData
     };    
     fetch(url, requestOptions)
