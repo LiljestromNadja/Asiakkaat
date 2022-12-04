@@ -6,9 +6,10 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="css/main.css">
 <script src="scripts/main.js"></script>
+<script src="scripts/io.js"></script>
 <title>Asiakkaat</title>
 </head>
-<body>
+<body onload="asetaFocus('hakusana')" onkeydown="tutkiKey(event, 'listaa')">
 <table id="listaus">
 	<thead>	
 		<tr> 
